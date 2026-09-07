@@ -9,6 +9,15 @@ const doctorSchema = new mongoose.Schema(
             unique: true,
         },
 
+        // =========================
+        // DEPARTMENT
+        // =========================
+        department: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Department",
+            default: null,
+        },
+
         specialization: {
             type: String,
             required: true,
@@ -61,6 +70,12 @@ const doctorSchema = new mongoose.Schema(
             default: "",
         },
 
+        approvalStatus: {
+            type: String,
+            enum: ["pending", "approved", "rejected"],
+            default: "pending",
+        },
+
         availableDays: {
             type: [String],
             default: [],
@@ -71,6 +86,7 @@ const doctorSchema = new mongoose.Schema(
                 type: String,
                 default: "",
             },
+
             end: {
                 type: String,
                 default: "",

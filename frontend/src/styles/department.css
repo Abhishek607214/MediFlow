@@ -1,0 +1,357 @@
+/* =========================================
+   DEPARTMENT MANAGEMENT
+========================================= */
+
+.department-page {
+    width: 100%;
+}
+
+/* =========================================
+   PAGE INTRO
+========================================= */
+
+.department-page-intro {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+.department-page-intro h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+    font-weight: 700;
+    color: #102a43;
+}
+
+.department-page-intro p {
+    margin: 0;
+    color: #627d98;
+    font-size: 16px;
+}
+
+/* =========================================
+   ADD BUTTON
+========================================= */
+
+.department-add-btn {
+    border: none;
+    background: #12877f;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.department-add-btn:hover {
+    background: #0e746d;
+}
+
+/* =========================================
+   FORM CARD
+========================================= */
+
+.department-form-card {
+    width: 100%;
+    background: white;
+    border: 1px solid #dce3e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 22px;
+    box-shadow: 0 2px 8px rgba(16, 42, 67, 0.04);
+}
+
+.department-form-card h2 {
+    margin: 0 0 22px;
+    font-size: 20px;
+    color: #102a43;
+}
+
+.department-form-group {
+    margin-bottom: 18px;
+}
+
+.department-form-group label {
+    display: block;
+    margin-bottom: 7px;
+    color: #243b53;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.department-form-group input,
+.department-form-group textarea {
+    width: 100%;
+    border: 1px solid #d5dee7;
+    border-radius: 8px;
+    padding: 11px 13px;
+    font-size: 14px;
+    color: #243b53;
+    outline: none;
+    font-family: inherit;
+}
+
+.department-form-group input {
+    height: 44px;
+}
+
+.department-form-group textarea {
+    resize: vertical;
+}
+
+.department-form-group input:focus,
+.department-form-group textarea:focus {
+    border-color: #12877f;
+}
+
+/* =========================================
+   FORM ACTIONS
+========================================= */
+
+.department-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.department-cancel-btn,
+.department-save-btn {
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.department-cancel-btn {
+    background: #edf2f7;
+    color: #486581;
+}
+
+.department-cancel-btn:hover {
+    background: #e2e8f0;
+}
+
+.department-save-btn {
+    background: #12877f;
+    color: white;
+}
+
+.department-save-btn:hover {
+    background: #0e746d;
+}
+
+/* =========================================
+   ERROR
+========================================= */
+
+.department-error {
+    background: #ffe5e5;
+    color: #c92a2a;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+/* =========================================
+   TABLE CARD
+========================================= */
+
+.department-table-card {
+    width: 100%;
+    background: white;
+    border: 1px solid #dce3e8;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(16, 42, 67, 0.04);
+}
+
+.department-table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+}
+
+.department-table-header h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #102a43;
+}
+
+/* =========================================
+   TABLE
+========================================= */
+
+.department-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.department-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.department-table th {
+    text-align: left;
+    padding: 12px 10px;
+    border-bottom: 1px solid #dce3e8;
+    color: #627d98;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.department-table td {
+    padding: 18px 10px;
+    border-bottom: 1px solid #edf2f7;
+    color: #243b53;
+    font-size: 14px;
+}
+
+.department-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.department-table td strong {
+    color: #102a43;
+}
+
+/* =========================================
+   STATUS
+========================================= */
+
+.department-status {
+    display: inline-block;
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.department-status.active {
+    background: #d9f8e9;
+    color: #087f5b;
+}
+
+.department-status.inactive {
+    background: #edf2f7;
+    color: #627d98;
+}
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.department-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.department-action-btn,
+.department-delete-btn {
+    border: none;
+    padding: 8px 13px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* DEACTIVATE */
+
+.department-action-btn.deactivate {
+    background: #fff0d5;
+    color: #b26a00;
+}
+
+.department-action-btn.deactivate:hover {
+    background: #ffe5b8;
+}
+
+/* ACTIVATE */
+
+.department-action-btn.activate {
+    background: #dff7eb;
+    color: #087f5b;
+}
+
+.department-action-btn.activate:hover {
+    background: #c7f1df;
+}
+
+/* =========================================
+   EDIT
+========================================= */
+
+.department-edit-btn {
+    border: 1px solid #cfe0f5;
+    background: #edf5ff;
+    color: #1769aa;
+    padding: 8px 13px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.department-edit-btn:hover {
+    background: #dcecff;
+}
+
+/* DELETE */
+
+.department-delete-btn {
+    background: #fff0f0;
+    color: #d64545;
+    border: 1px solid #f3caca;
+}
+
+.department-delete-btn:hover {
+    background: #ffe3e3;
+    color: #b83232;
+}
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+.department-message {
+    padding: 30px 10px;
+    color: #627d98;
+    font-size: 14px;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 800px) {
+
+    .department-page-intro {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .department-add-btn {
+        width: 100%;
+    }
+
+    .department-table {
+        min-width: 750px;
+    }
+
+    .department-form-actions {
+        flex-direction: column;
+    }
+
+    .department-cancel-btn,
+    .department-save-btn {
+        width: 100%;
+    }
+}

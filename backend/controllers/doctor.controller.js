@@ -4,6 +4,7 @@ const Doctor = require("../models/doctor.model");
 const createDoctorProfile = async (req, res) => {
     try {
         const {
+            department,
             specialization,
             qualification,
             experience,
@@ -16,15 +17,19 @@ const createDoctorProfile = async (req, res) => {
             availableDays,
             availableTime,
         } = req.body;
+if (!department) {
+    return res.status(400).json({
+        success: false,
+        message: "Department is required",
+    });
+}
 
-        // Check required field
-        if (!specialization) {
-            return res.status(400).json({
-                success: false,
-                message: "Specialization is required",
-            });
-        }
-
+if (!specialization) {
+    return res.status(400).json({
+        success: false,
+        message: "Specialization is required",
+    });
+}
         // Check if doctor profile already exists
         const existingDoctor = await Doctor.findOne({
             user: req.user._id,
@@ -40,6 +45,7 @@ const createDoctorProfile = async (req, res) => {
         // Create doctor profile
         const doctor = await Doctor.create({
             user: req.user._id,
+            department,
             specialization,
             qualification,
             experience,
@@ -76,7 +82,8 @@ const getDoctorProfile = async (req, res) => {
     try {
         const doctor = await Doctor.findOne({
             user: req.user._id,
-        }).populate("user", "name email phone role");
+        }).populate("user", "name email phone role")
+          .populate("department","name description status");
 
         if (!doctor) {
             return res.status(404).json({
@@ -117,6 +124,7 @@ const updateDoctorProfile = async (req, res) => {
         }
 
         const allowedFields = [
+            "department",
             "specialization",
             "qualification",
             "experience",
@@ -168,7 +176,8 @@ const updateDoctorProfile = async (req, res) => {
 const getAllDoctors = async (req, res) => {
     try {
         const doctors = await Doctor.find()
-            .populate("user", "name email phone role");
+            .populate("user", "name email phone role")
+            .populate("department","name description status");
 
         return res.status(200).json({
             success: true,

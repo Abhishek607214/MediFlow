@@ -153,8 +153,30 @@ const updatePatientProfile = async (req, res) => {
     }
 };
 
+const getAllPatients = async (req, res) => {
+    try {
+        const patients = await Patient.find()
+            .populate("user", "name email phone role");
+
+        return res.status(200).json({
+            success: true,
+            patients
+        });
+
+    } catch (error) {
+        console.error("Get all patients error:", error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Failed to get patients",
+            error: error.message
+        });
+    }
+};
+
 module.exports = {
-  createPatientProfile,
-  getPatientProfile,
-  updatePatientProfile,
+    createPatientProfile,
+    getPatientProfile,
+    updatePatientProfile,
+    getAllPatients,
 };

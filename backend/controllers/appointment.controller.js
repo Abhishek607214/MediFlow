@@ -642,11 +642,114 @@ const cancelAppointment = async (req, res) => {
     }
 };
 
+// ==========================================
+// RECEPTIONIST - GET ALL APPOINTMENTS
+// ==========================================
+
+const getReceptionistAppointments = async (req, res) => {
+    try {
+        const appointments = await Appointment.find()
+            .populate({
+                path: "patient",
+                populate: {
+                    path: "user",
+                    select: "name email phone"
+                }
+            })
+            .populate({
+                path: "doctor",
+                populate: {
+                    path: "user",
+                    select: "name email phone"
+                }
+            })
+            .sort({ date: 1, time: 1 });
+
+        return res.status(200).json({
+            success: true,
+            appointments
+        });
+
+    } catch (error) {
+        console.error(
+            "Get receptionist appointments error:",
+            error
+        );
+
+        return res.status(500).json({
+            success: false,
+            message: "Server error",
+            error: error.message
+        });
+    }
+};
+
+
+// ==========================================
+// RECEPTIONIST - UPDATE APPOINTMENT STATUS
+// ==========================================
+
+const updateReceptionistAppointmentStatus = async (req, res) => {
+    try {
+        const { status } = req.body;
+
+        const allowedStatuses = [
+            "confirmed",
+            "rejected",
+            "completed",
+            "cancelled"
+        ];
+
+        if (!allowedStatuses.includes(status)) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid appointment status"
+            });
+        }
+
+        const appointment = await Appointment.findById(
+            req.params.id
+        );
+
+        if (!appointment) {
+            return res.status(404).json({
+                success: false,
+                message: "Appointment not found"
+            });
+        }
+
+        appointment.status = status;
+
+        await appointment.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Appointment status updated successfully",
+            appointment
+        });
+
+    } catch (error) {
+        console.error(
+            "Receptionist appointment status error:",
+            error
+        );
+
+        return res.status(500).json({
+            success: false,
+            message: "Server error",
+            error: error.message
+        });
+    }
+};
+
+
 module.exports = {
     createAppointment,
     getAvailableSlots,
     getPatientAppointments,
     getDoctorAppointments,
     updateAppointmentStatus,
-    cancelAppointment
+    cancelAppointment,
+    getReceptionistAppointments,
+    updateReceptionistAppointmentStatus
 };

@@ -6,7 +6,9 @@ const {
     getPatientAppointments,
     getDoctorAppointments,
     updateAppointmentStatus,
-    cancelAppointment
+    cancelAppointment,
+    getReceptionistAppointments,
+    updateReceptionistAppointmentStatus
 } = require("../controllers/appointment.controller");
 
 const { protect } = require("../middleware/auth.middleware");
@@ -63,6 +65,29 @@ router.put(
     protect,
     authorize("doctor"),
     updateAppointmentStatus
+);
+
+// ==========================================
+// RECEPTIONIST - VIEW APPOINTMENTS
+// ==========================================
+
+router.get(
+    "/receptionist",
+    protect,
+    authorize("receptionist"),
+    getReceptionistAppointments
+);
+
+
+// ==========================================
+// RECEPTIONIST - UPDATE APPOINTMENT
+// ==========================================
+
+router.put(
+    "/:id/receptionist-status",
+    protect,
+    authorize("receptionist"),
+    updateReceptionistAppointmentStatus
 );
 
 module.exports = router;

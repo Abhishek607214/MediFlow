@@ -7,6 +7,27 @@ function DoctorDashboard() {
     const [error, setError] = useState("");
     const [activeFilter, setActiveFilter] = useState("all");
 
+    // ---------------------------------------
+    // REPORT STATES
+    // ---------------------------------------
+
+    const [reports, setReports] = useState([]);
+    const [showReportForm, setShowReportForm] = useState(false);
+    const [selectedAppointment, setSelectedAppointment] = useState(null);
+    const [reportLoading, setReportLoading] = useState(false);
+
+    const [reportForm, setReportForm] = useState({
+        diagnosis: "",
+        symptoms: "",
+        testResults: "",
+        prescription: "",
+        doctorNotes: ""
+    });
+
+    // ---------------------------------------
+    // GET APPOINTMENTS
+    // ---------------------------------------
+
     const getAppointments = async () => {
         try {
             setError("");
@@ -47,8 +68,33 @@ function DoctorDashboard() {
         }
     };
 
+    // ---------------------------------------
+    // GET DOCTOR REPORTS
+    // ---------------------------------------
+
+    const getReports = async () => {
+        try {
+            const response = await api.get(
+                "/reports/doctor"
+            );
+
+            if (response.data.success) {
+                setReports(
+                    response.data.reports || []
+                );
+            }
+
+        } catch (error) {
+            console.error(
+                "DOCTOR REPORTS ERROR:",
+                error
+            );
+        }
+    };
+
     useEffect(() => {
         getAppointments();
+        getReports();
     }, []);
 
     // ---------------------------------------
@@ -75,10 +121,7 @@ function DoctorDashboard() {
             );
 
             if (response.data.success) {
-
-                // Refresh appointments
                 await getAppointments();
-
             } else {
                 setError(
                     response.data.message ||
@@ -97,6 +140,152 @@ function DoctorDashboard() {
                 "Unable to update appointment"
             );
         }
+    };
+
+    // ---------------------------------------
+    // OPEN REPORT FORM
+    // ---------------------------------------
+
+    const openReportForm = (appointment) => {
+
+        setSelectedAppointment(appointment);
+
+        setReportForm({
+            diagnosis: "",
+            symptoms: "",
+            testResults: "",
+            prescription: "",
+            doctorNotes: ""
+        });
+
+        setError("");
+
+        setShowReportForm(true);
+    };
+
+    // ---------------------------------------
+    // CLOSE REPORT FORM
+    // ---------------------------------------
+
+    const closeReportForm = () => {
+
+        setShowReportForm(false);
+
+        setSelectedAppointment(null);
+
+        setReportForm({
+            diagnosis: "",
+            symptoms: "",
+            testResults: "",
+            prescription: "",
+            doctorNotes: ""
+        });
+    };
+
+    // ---------------------------------------
+    // HANDLE REPORT INPUT
+    // ---------------------------------------
+
+    const handleReportChange = (event) => {
+
+        const {
+            name,
+            value
+        } = event.target;
+
+        setReportForm((previous) => ({
+            ...previous,
+            [name]: value
+        }));
+    };
+
+    // ---------------------------------------
+    // SUBMIT REPORT
+    // ---------------------------------------
+
+    const submitReport = async (event) => {
+
+        event.preventDefault();
+
+        if (!selectedAppointment) {
+            return;
+        }
+
+        try {
+
+            setReportLoading(true);
+            setError("");
+
+            const response = await api.post(
+                "/reports/doctor",
+                {
+                    appointmentId:
+                        selectedAppointment._id,
+
+                    diagnosis:
+                        reportForm.diagnosis,
+
+                    symptoms:
+                        reportForm.symptoms,
+
+                    testResults:
+                        reportForm.testResults,
+
+                    prescription:
+                        reportForm.prescription,
+
+                    doctorNotes:
+                        reportForm.doctorNotes
+                }
+            );
+
+            if (response.data.success) {
+
+                alert(
+                    "Patient report created successfully."
+                );
+
+                await getReports();
+
+                closeReportForm();
+
+            } else {
+
+                setError(
+                    response.data.message ||
+                    "Unable to create report"
+                );
+            }
+
+        } catch (error) {
+
+            console.error(
+                "CREATE REPORT ERROR:",
+                error
+            );
+
+            setError(
+                error.response?.data?.message ||
+                "Unable to create report"
+            );
+
+        } finally {
+
+            setReportLoading(false);
+        }
+    };
+
+    // ---------------------------------------
+    // CHECK WHETHER REPORT EXISTS
+    // ---------------------------------------
+
+    const hasReport = (appointmentId) => {
+
+        return reports.some(
+            (report) =>
+                report.appointment?._id === appointmentId ||
+                report.appointment === appointmentId
+        );
     };
 
     // ---------------------------------------
@@ -164,7 +353,10 @@ function DoctorDashboard() {
                 Manage your patient appointments.
             </p>
 
-            {/* Error */}
+            {/* -------------------------------- */}
+            {/* ERROR */}
+            {/* -------------------------------- */}
+
             {error && (
                 <div className="error-message">
                     {error}
@@ -443,11 +635,243 @@ function DoctorDashboard() {
                                 </div>
                             )}
 
+                            {/* -------------------------------- */}
+                            {/* COMPLETED ACTION */}
+                            {/* -------------------------------- */}
+
+                            {appointment.status ===
+                                "completed" && (
+
+                                <div className="appointment-actions">
+
+                                    {hasReport(
+                                        appointment._id
+                                    ) ? (
+
+                                        <button
+                                            disabled
+                                        >
+                                            ✅ Report Given
+                                        </button>
+
+                                    ) : (
+
+                                        <button
+                                            onClick={() =>
+                                                openReportForm(
+                                                    appointment
+                                                )
+                                            }
+                                        >
+                                            📋 Give Report
+                                        </button>
+
+                                    )}
+
+                                </div>
+                            )}
+
                         </div>
                     )
                 )}
 
             </div>
+
+            {/* ====================================== */}
+            {/* REPORT MODAL */}
+            {/* ====================================== */}
+
+            {showReportForm &&
+                selectedAppointment && (
+
+                <div className="report-modal-overlay">
+
+                    <div className="report-modal">
+
+                        <div className="report-modal-header">
+
+                            <div>
+                                <h2>
+                                    📋 Give Patient Report
+                                </h2>
+
+                                <p>
+                                    Patient:{" "}
+                                    <strong>
+                                        {
+                                            selectedAppointment
+                                                .patient
+                                                ?.user
+                                                ?.name ||
+                                            selectedAppointment
+                                                .patient
+                                                ?.name ||
+                                            "Patient"
+                                        }
+                                    </strong>
+                                </p>
+                            </div>
+
+                            <button
+                                type="button"
+                                className="report-close-button"
+                                onClick={
+                                    closeReportForm
+                                }
+                            >
+                                ✕
+                            </button>
+
+                        </div>
+
+                        <form
+                            onSubmit={
+                                submitReport
+                            }
+                        >
+
+                            {/* Diagnosis */}
+
+                            <div className="report-form-group">
+
+                                <label>
+                                    Diagnosis
+                                </label>
+
+                                <textarea
+                                    name="diagnosis"
+                                    value={
+                                        reportForm.diagnosis
+                                    }
+                                    onChange={
+                                        handleReportChange
+                                    }
+                                    placeholder="Enter patient's diagnosis"
+                                    rows="3"
+                                />
+
+                            </div>
+
+                            {/* Symptoms */}
+
+                            <div className="report-form-group">
+
+                                <label>
+                                    Symptoms
+                                </label>
+
+                                <textarea
+                                    name="symptoms"
+                                    value={
+                                        reportForm.symptoms
+                                    }
+                                    onChange={
+                                        handleReportChange
+                                    }
+                                    placeholder="Enter patient's symptoms"
+                                    rows="3"
+                                />
+
+                            </div>
+
+                            {/* Test Results */}
+
+                            <div className="report-form-group">
+
+                                <label>
+                                    Test Results
+                                </label>
+
+                                <textarea
+                                    name="testResults"
+                                    value={
+                                        reportForm.testResults
+                                    }
+                                    onChange={
+                                        handleReportChange
+                                    }
+                                    placeholder="Enter test results"
+                                    rows="3"
+                                />
+
+                            </div>
+
+                            {/* Prescription */}
+
+                            <div className="report-form-group">
+
+                                <label>
+                                    Prescription
+                                </label>
+
+                                <textarea
+                                    name="prescription"
+                                    value={
+                                        reportForm.prescription
+                                    }
+                                    onChange={
+                                        handleReportChange
+                                    }
+                                    placeholder="Enter prescribed medicines and instructions"
+                                    rows="3"
+                                />
+
+                            </div>
+
+                            {/* Doctor Notes */}
+
+                            <div className="report-form-group">
+
+                                <label>
+                                    Doctor's Notes
+                                </label>
+
+                                <textarea
+                                    name="doctorNotes"
+                                    value={
+                                        reportForm.doctorNotes
+                                    }
+                                    onChange={
+                                        handleReportChange
+                                    }
+                                    placeholder="Enter additional notes for the patient"
+                                    rows="3"
+                                />
+
+                            </div>
+
+                            {/* Buttons */}
+
+                            <div className="report-form-actions">
+
+                                <button
+                                    type="button"
+                                    onClick={
+                                        closeReportForm
+                                    }
+                                >
+                                    Cancel
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    disabled={
+                                        reportLoading
+                                    }
+                                >
+                                    {reportLoading
+                                        ? "Saving..."
+                                        : "Save Report"}
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </div>
+            )}
 
         </div>
     );

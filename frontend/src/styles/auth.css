@@ -1,0 +1,299 @@
+/* =========================
+   AUTHENTICATION
+   LOGIN + REGISTER
+========================= */
+
+.login-container {
+    min-height: calc(100vh - 70px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px 20px;
+
+    background: #f5f8fa;
+
+    box-sizing: border-box;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 450px;
+
+    background: white;
+
+    padding: 40px;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.08);
+
+    box-sizing: border-box;
+}
+
+/* =========================
+   MEDIFLOW HEADING
+========================= */
+
+.login-card h1 {
+    margin: 0 0 10px;
+
+    color: #0f766e;
+
+    font-size: 32px;
+
+    text-align: center;
+}
+
+.login-card h2 {
+    margin: 0 0 10px;
+
+    color: #0f172a;
+
+    font-size: 28px;
+
+    text-align: center;
+}
+
+/* =========================
+   DESCRIPTION
+========================= */
+
+.login-card > p {
+    margin: 0 0 25px;
+
+    color: #64748b;
+
+    text-align: center;
+
+    line-height: 1.6;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.login-card form {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 16px;
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+.login-card input {
+    width: 100%;
+
+    padding: 13px 15px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+
+    color: #0f172a;
+
+    outline: none;
+
+    transition: 0.2s;
+}
+
+.login-card input:focus {
+    border-color: #0f766e;
+
+    box-shadow:
+        0 0 0 3px rgba(15, 118, 110, 0.12);
+}
+
+.login-card input::placeholder {
+    color: #94a3b8;
+}
+
+/* =========================
+   MAIN AUTH BUTTON
+========================= */
+
+.login-card form > button {
+    width: 100%;
+
+    padding: 13px 18px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #0f766e;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.login-card form > button:hover {
+    background: #115e59;
+}
+
+.login-card form > button:disabled {
+    background: #94a3b8;
+
+    cursor: not-allowed;
+}
+
+/* =========================
+   PATIENT / DOCTOR SELECTION
+========================= */
+
+.role-section {
+    margin-bottom: 20px;
+}
+
+.role-section label {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #334155;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+.role-buttons {
+    display: flex;
+
+    gap: 12px;
+}
+
+.role-btn {
+    flex: 1;
+
+    padding: 12px;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 8px;
+
+    background: white;
+
+    color: #334155;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.role-btn:hover {
+    border-color: #0f766e;
+
+    color: #0f766e;
+}
+
+.role-btn.active {
+    background: #0f766e;
+
+    border-color: #0f766e;
+
+    color: white;
+}
+
+.role-btn.active:hover {
+    background: #115e59;
+
+    color: white;
+}
+
+/* =========================
+   LOGIN / REGISTER LINK
+========================= */
+
+.register-link {
+    margin-top: 20px !important;
+
+    margin-bottom: 0 !important;
+
+    text-align: center;
+}
+
+.register-link button {
+    width: auto !important;
+
+    padding: 0 !important;
+
+    background: transparent !important;
+
+    color: #0f766e !important;
+
+    border: none !important;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.register-link button:hover {
+    background: transparent !important;
+
+    color: #115e59 !important;
+}
+
+/* =========================
+   AUTH ERROR
+========================= */
+
+.login-card .error-message {
+    margin-bottom: 20px;
+
+    text-align: center;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .login-container {
+        padding: 25px 15px;
+    }
+
+    .login-card {
+        padding: 30px 22px;
+    }
+
+    .login-card h1 {
+        font-size: 28px;
+    }
+
+    .login-card h2 {
+        font-size: 24px;
+    }
+
+    .role-buttons {
+        flex-direction: column;
+    }
+
+    .role-btn {
+        width: 100%;
+    }
+}

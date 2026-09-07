@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
+import "../styles/auth.css";
 
 function Register() {
     const navigate = useNavigate();
@@ -9,6 +10,9 @@ function Register() {
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
+
+    // NEW: role state
+    const [role, setRole] = useState("patient");
 
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
@@ -27,6 +31,7 @@ function Register() {
                 email,
                 phone,
                 password,
+                role, // NEW
             });
 
             console.log("REGISTER RESPONSE:", response.data);
@@ -45,12 +50,8 @@ function Register() {
                     "Registration failed"
                 );
             }
-
         } catch (error) {
-            console.error(
-                "REGISTER ERROR:",
-                error
-            );
+            console.error("REGISTER ERROR:", error);
 
             setError(
                 error.response?.data?.message ||
@@ -63,7 +64,6 @@ function Register() {
 
     return (
         <div className="login-container">
-
             <div className="login-card">
 
                 <h1>MediFlow</h1>
@@ -86,6 +86,50 @@ function Register() {
                         {success}
                     </div>
                 )}
+
+                {/* ROLE SELECTION */}
+                <div className="role-section">
+                    <label>Register as</label>
+
+                    <div className="role-buttons">
+
+                        <button
+                            type="button"
+                            className={
+                                role === "patient"
+                                    ? "role-btn active"
+                                    : "role-btn"
+                            }
+                            onClick={() => setRole("patient")}
+                        >
+                            👤 Patient
+                        </button>
+
+                        <button
+                            type="button"
+                            className={
+                                role === "doctor"
+                                    ? "role-btn active"
+                                    : "role-btn"
+                            }
+                            onClick={() => setRole("doctor")}
+                        >
+                            🩺 Doctor
+                        </button>
+                        <button
+                          type="button"
+                           className={
+                          role === "receptionist"
+                          ? "role-btn active"
+                          : "role-btn"
+                        }
+                    onClick={() => setRole("receptionist")}
+                    >
+                   🧑‍💼 Receptionist
+                 </button>
+
+                    </div>
+                </div>
 
                 <form onSubmit={handleRegister}>
 
@@ -129,19 +173,27 @@ function Register() {
                         required
                     />
 
-                    <button
-                        type="submit"
-                        disabled={loading}
-                    >
-                        {loading
-                            ? "Creating Account..."
-                            : "Register"}
-                    </button>
+<button
+    type="submit"
+    disabled={loading}
+>
+    {loading
+        ? "Creating Account..."
+        : `Register as ${
+            role === "doctor"
+                ? "Doctor"
+                : role === "receptionist"
+                ? "Receptionist"
+                : "Patient"
+        }`
+    }
+</button>
 
                 </form>
 
                 <p className="register-link">
                     Already have an account?{" "}
+
                     <button
                         type="button"
                         onClick={() => navigate("/")}
@@ -151,7 +203,6 @@ function Register() {
                 </p>
 
             </div>
-
         </div>
     );
 }

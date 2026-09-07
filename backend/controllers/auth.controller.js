@@ -29,12 +29,13 @@ const register = async (req, res) => {
 
         if (
             selectedRole !== "patient" &&
-            selectedRole !== "doctor"
+            selectedRole !== "doctor" &&
+            selectedRole !== "receptionist"
         ) {
             return res.status(400).json({
                 success: false,
                 message:
-                    "Registration is allowed only for patients and doctors"
+                   "Registration is allowed only for patients, doctors and receptionists"
             });
         }
 
@@ -139,7 +140,7 @@ const login = async (req, res) => {
         
         // Find user
         const user = await User.findOne({
-            email: email.toLowerCase()
+            email: email.toLowerCase().trim()
         });
         
         if (!user) {

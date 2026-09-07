@@ -3,6 +3,7 @@ import api from "../services/api";
 
 function DoctorProfile() {
     const [profile, setProfile] = useState({
+        department:"",
         specialization: "",
         qualification: "",
         experience: "",
@@ -23,6 +24,7 @@ function DoctorProfile() {
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState("");
     const [message, setMessage] = useState("");
+    const[departments,setDepartments] = useState([]);
 
     const days = [
         "Monday",
@@ -36,7 +38,23 @@ function DoctorProfile() {
 
     useEffect(() => {
         getProfile();
+        getDepartments();
     }, []);
+
+ const getDepartments = async () => {
+    try {
+        const response = await api.get("/departments/active");
+       console.log("Departments Response:",response.data)
+        if (response.data.success) {
+            setDepartments(response.data.departments);
+        }
+    } catch (error) {
+        console.error(
+            "DEPARTMENTS ERROR:",
+            error
+        );
+    }
+};   
 
     const getProfile = async () => {
         try {
@@ -48,6 +66,7 @@ function DoctorProfile() {
                 const doctor = response.data.doctor;
 
                 setProfile({
+                    department:doctor.department?._id||doctor.department||"",
                     specialization: doctor.specialization || "",
                     qualification: doctor.qualification || "",
                     experience: doctor.experience || "",
@@ -202,6 +221,31 @@ function DoctorProfile() {
                 {/* Professional Information */}
 
                 <h2>Professional Information</h2>
+            
+            <div className="form-group">
+             <label>
+                 Department
+             </label>
+
+          <select
+               name="department"
+               value={profile.department}
+               onChange={handleChange}
+           >
+        <option value="">
+            Select Department
+        </option>
+
+        {departments.map((department) => (
+            <option
+                key={department._id}
+                value={department._id}
+            >
+                {department.name}
+                </option>
+             ))}
+        </select>
+      </div>
 
                 <div className="form-grid">
 

@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "../styles/home.css";
+import Chatbot from "../components/Chatbot";
 
 function Home() {
     const navigate = useNavigate();
@@ -793,6 +794,8 @@ function Home() {
     </div>
 
 </footer>
+
+<Chatbot/>
         </div>
     );
 }
