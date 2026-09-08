@@ -334,3 +334,47 @@
     color: #9aa5b1;
     font-size: 14px;
 }
+/* ==========================================
+   PERSONAL CHAT BUTTON
+   ========================================== */
+
+.personal-chat-button {
+    margin-top: 14px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.personal-chat-button:hover {
+    background: #1d4ed8;
+}
+
+.personal-chat-button:active {
+    transform: scale(0.98);
+}
+.video-consultation-button {
+    margin-top: 10px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    background: #16a34a;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.video-consultation-button:hover {
+    background: #15803d;
+}
+
+.video-consultation-button:active {
+    transform: scale(0.98);
+}

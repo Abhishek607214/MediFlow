@@ -33,8 +33,13 @@ import ReceptionistSettings from "./pages/ReceptionistSettings";
 import MedicalReports from "./pages/MedicalReports";
 import BedRoomManagement from "./pages/BedRoomManagement";
 
-import "./App.css";
 
+import PatientPersonalChat from "./modules/personal-chat/pages/PatientPersonalChat";
+import DoctorPersonalChat from "./modules/personal-chat/pages/DoctorPersonalChat";
+import PatientVideoConsultation from "./modules/video-consultation/pages/PatientVideoConsultation";
+
+import DoctorVideoConsultation from "./modules/video-consultation/pages/DoctorVideoConsultation";
+import "./App.css";
 
 function Navbar() {
 
@@ -290,6 +295,26 @@ function App() {
                <Route
                path="/bed-room-management"
                element={<BedRoomManagement />}
+               />
+
+               <Route
+               path="/patient-personal-chat/:appointmentId"
+               element={<PatientPersonalChat />}
+               />
+
+               <Route
+               path="/doctor-personal-chat/:appointmentId"
+               element={<DoctorPersonalChat />}
+               />
+
+               <Route
+               path="/patient-video-consultation/:appointmentId"
+               element={<PatientVideoConsultation />}
+               />
+
+               <Route
+               path="/doctor-video-consultation/:appointmentId"
+               element={<DoctorVideoConsultation />}
                />
 
             </Routes>

@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 
 function Appointments() {
+    const navigate = useNavigate();
+
     const [appointments, setAppointments] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -114,15 +117,40 @@ function Appointments() {
                                 "Not specified"}
                         </p>
 
-                        <p>
-                            <strong>Status:</strong>{" "}
+                       <p>
+    <strong>Status:</strong>{" "}
+    <span
+        className={`status ${appointment.status}`}
+    >
+        {appointment.status}
+    </span>
+</p>
 
-                            <span
-                                className={`status ${appointment.status}`}
-                            >
-                                {appointment.status}
-                            </span>
-                        </p>
+{(appointment.status === "confirmed" ||
+    appointment.status === "completed") && (
+    <button
+        className="personal-chat-button"
+        onClick={() =>
+            navigate(
+                `/patient-personal-chat/${appointment._id}`
+            )
+        }
+    >
+        💬 Chat Doctor
+    </button>
+)}
+{appointment.status === "confirmed" && (
+    <button
+        className="video-consultation-button"
+        onClick={() =>
+            navigate(
+                `/patient-video-consultation/${appointment._id}`
+            )
+        }
+    >
+        📹 Join Video Consultation
+    </button>
+)}
 
                     </div>
 

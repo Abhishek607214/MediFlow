@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 
 function DoctorDashboard() {
+    const navigate = useNavigate();
     const [appointments, setAppointments] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -615,25 +617,44 @@ function DoctorDashboard() {
                             {/* -------------------------------- */}
                             {/* CONFIRMED ACTION */}
                             {/* -------------------------------- */}
+ {appointment.status === "confirmed" && (
+    <div>
+        <button
+            className="personal-chat-button"
+            onClick={() =>
+                navigate(
+                    `/doctor-personal-chat/${appointment._id}`
+                )
+            }
+        >
+            💬 Chat Patient
+        </button>
 
-                            {appointment.status ===
-                                "confirmed" && (
+{appointment.status === "confirmed" && (
+    <button
+        className="video-consultation-button"
+        onClick={() =>
+            navigate(
+                `/doctor-video-consultation/${appointment._id}`
+            )
+        }
+    >
+        📹 Join Video Consultation
+    </button>
+)}
 
-                                <div className="appointment-actions">
-
-                                    <button
-                                        onClick={() =>
-                                            updateStatus(
-                                                appointment._id,
-                                                "completed"
-                                            )
-                                        }
-                                    >
-                                        Mark Completed
-                                    </button>
-
-                                </div>
-                            )}
+        <button
+            onClick={() =>
+                handleUpdateStatus(
+                    appointment._id,
+                    "completed"
+                )
+            }
+        >
+            Mark Completed
+        </button>
+    </div>
+)}
 
                             {/* -------------------------------- */}
                             {/* COMPLETED ACTION */}
