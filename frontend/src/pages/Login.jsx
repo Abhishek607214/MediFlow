@@ -1,33 +1,22 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
-
-// Authentication CSS
 import "../styles/auth.css";
 
 function Login() {
-
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
-
     const [password, setPassword] = useState("");
-
     const [error, setError] = useState("");
-
     const [loading, setLoading] = useState(false);
 
-
     const handleLogin = async (e) => {
-
         e.preventDefault();
-
         setError("");
-
         setLoading(true);
 
         try {
-
             const response = await api.post("/auth/login", {
                 email,
                 password
@@ -36,167 +25,230 @@ function Login() {
             console.log("LOGIN RESPONSE:", response.data);
 
             if (response.data.success) {
-
                 const user = response.data.user;
 
                 console.log("USER SAVED:", user);
 
-
-                // Save logged-in user
                 localStorage.setItem(
                     "user",
                     JSON.stringify(user)
                 );
 
-
-                // Redirect according to role
-
                 if (user.role === "admin") {
-
-                    window.location.href =
-                        "/admin-dashboard";
-
-                }
-                else if (user.role === "doctor") {
-
-                    window.location.href =
-                        "/doctor-dashboard";
-
-                }
-                else if (user.role === "receptionist") {
-
-                    window.location.href =
-                        "/receptionist-dashboard";
-
-                }
-                else if (user.role === "patient") {
-
-                    window.location.href =
-                        "/dashboard";
-
-                }
-                else {
-
+                    window.location.href = "/admin-dashboard";
+                } else if (user.role === "doctor") {
+                    window.location.href = "/doctor-dashboard";
+                } else if (user.role === "receptionist") {
+                    window.location.href = "/receptionist-dashboard";
+                } else if (user.role === "patient") {
+                    window.location.href = "/dashboard";
+                } else {
                     setError("Unknown user role");
-
                 }
-
             } else {
-
                 setError(
                     response.data.message ||
                     "Login failed"
                 );
-
             }
-
         } catch (error) {
-
-            console.error(
-                "LOGIN ERROR:",
-                error
-            );
+            console.error("LOGIN ERROR:", error);
 
             setError(
                 error.response?.data?.message ||
                 "Unable to connect to server"
             );
-
         } finally {
-
             setLoading(false);
-
         }
-
     };
 
-
-    // Component UI
     return (
+        <div className="auth-page">
 
-        <div className="login-container">
+            {/* =========================
+                LEFT BRANDING
+            ========================= */}
+            <div className="auth-brand-panel">
 
-            <div className="login-card">
-
-                <h1>MediFlow</h1>
-
-                <h2>Login</h2>
-
-                <p>
-                    Login to manage your healthcare
-                    appointments.
-                </p>
-
-
-                {error && (
-
-                    <div className="error-message">
-                        {error}
+                <div className="auth-brand">
+                    <div className="auth-brand-logo">
+                        ✚
                     </div>
 
-                )}
+                    <div>
+                        <h1>
+                            Medi<span>Flow</span>
+                        </h1>
+
+                        <p>
+                            Hospital Management System
+                        </p>
+                    </div>
+                </div>
+
+                <div className="auth-brand-content">
+
+                    <h2>
+                        Better Care,
+                        <br />
+                        <strong>
+                            Smarter Management
+                        </strong>
+                    </h2>
+
+                    <p>
+                        Seamless appointments, efficient hospital
+                        management and improved patient care —
+                        all in one place.
+                    </p>
+
+                    <div className="auth-benefits">
+
+                        <div>
+                            <span>📅</span>
+                            <p>
+                                <strong>Book</strong>
+                                <br />
+                                Appointments
+                            </p>
+                        </div>
+
+                        <div>
+                            <span>🩺</span>
+                            <p>
+                                <strong>Consult</strong>
+                                <br />
+                                Doctors
+                            </p>
+                        </div>
+
+                        <div>
+                            <span>🏥</span>
+                            <p>
+                                <strong>Manage</strong>
+                                <br />
+                                Hospital
+                            </p>
+                        </div>
+
+                        <div>
+                            <span>♥</span>
+                            <p>
+                                <strong>Better</strong>
+                                <br />
+                                Health
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
 
 
-                <form onSubmit={handleLogin}>
+            {/* =========================
+                RIGHT LOGIN
+            ========================= */}
+            <div className="auth-form-area">
 
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) =>
-                            setEmail(e.target.value)
-                        }
-                        required
-                    />
-
-
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) =>
-                            setPassword(e.target.value)
-                        }
-                        required
-                    />
-
-
-                    <button
-                        type="submit"
-                        disabled={loading}
-                    >
-
-                        {loading
-                            ? "Logging in..."
-                            : "Login"
-                        }
-
-                    </button>
-
-                </form>
-
-
-                <p className="register-link">
-
-                    Don't have an account?{" "}
+                <div className="auth-top-link">
+                    Don't have an account?
 
                     <button
                         type="button"
-                        onClick={() =>
-                            navigate("/register")
-                        }
+                        onClick={() => navigate("/register")}
                     >
-                        Register
+                        Create account
                     </button>
+                </div>
 
-                </p>
+
+                <div className="login-card">
+
+                    <div className="auth-card-logo">
+                        ✚
+                    </div>
+
+                    <h2>
+                        Welcome Back 👋
+                    </h2>
+
+                    <p className="auth-subtitle">
+                        Login to your MediFlow account
+                    </p>
+
+
+                    {error && (
+                        <div className="error-message">
+                            {error}
+                        </div>
+                    )}
+
+
+                    <form onSubmit={handleLogin}>
+
+                        <div className="auth-input-group">
+                            <span>✉️</span>
+
+                            <input
+                                type="email"
+                                placeholder="Email address"
+                                value={email}
+                                onChange={(e) =>
+                                    setEmail(e.target.value)
+                                }
+                                required
+                            />
+                        </div>
+
+
+                        <div className="auth-input-group">
+                            <span>🔒</span>
+
+                            <input
+                                type="password"
+                                placeholder="Password"
+                                value={password}
+                                onChange={(e) =>
+                                    setPassword(e.target.value)
+                                }
+                                required
+                            />
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            disabled={loading}
+                        >
+                            {loading
+                                ? "Logging in..."
+                                : "Login  →"}
+                        </button>
+
+                    </form>
+
+
+                    <p className="register-link">
+                        Don't have an account?{" "}
+
+                        <button
+                            type="button"
+                            onClick={() =>
+                                navigate("/register")
+                            }
+                        >
+                            Create account
+                        </button>
+                    </p>
+
+                </div>
 
             </div>
 
         </div>
-
     );
-
 }
 
 export default Login;

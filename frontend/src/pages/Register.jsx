@@ -11,7 +11,6 @@ function Register() {
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
 
-    // NEW: role state
     const [role, setRole] = useState("patient");
 
     const [error, setError] = useState("");
@@ -31,7 +30,7 @@ function Register() {
                 email,
                 phone,
                 password,
-                role, // NEW
+                role
             });
 
             console.log("REGISTER RESPONSE:", response.data);
@@ -62,137 +61,105 @@ function Register() {
         }
     };
 
+    const roleName =
+        role === "doctor"
+            ? "Doctor"
+            : role === "receptionist"
+            ? "Receptionist"
+            : "Patient";
+
     return (
-        <div className="login-container">
-            <div className="login-card">
+        <div className="auth-page">
 
-                <h1>MediFlow</h1>
+            {/* LEFT BRANDING */}
+            <div className="auth-brand-panel">
 
-                <h2>Create Account</h2>
+                <div className="auth-brand">
 
-                <p>
-                    Register to manage your healthcare
-                    appointments.
-                </p>
-
-                {error && (
-                    <div className="error-message">
-                        {error}
+                    <div className="auth-brand-logo">
+                        ✚
                     </div>
-                )}
 
-                {success && (
-                    <div className="success-message">
-                        {success}
+                    <div>
+                        <h1>
+                            Medi<span>Flow</span>
+                        </h1>
+
+                        <p>
+                            Hospital Management System
+                        </p>
                     </div>
-                )}
 
-                {/* ROLE SELECTION */}
-                <div className="role-section">
-                    <label>Register as</label>
-
-                    <div className="role-buttons">
-
-                        <button
-                            type="button"
-                            className={
-                                role === "patient"
-                                    ? "role-btn active"
-                                    : "role-btn"
-                            }
-                            onClick={() => setRole("patient")}
-                        >
-                            👤 Patient
-                        </button>
-
-                        <button
-                            type="button"
-                            className={
-                                role === "doctor"
-                                    ? "role-btn active"
-                                    : "role-btn"
-                            }
-                            onClick={() => setRole("doctor")}
-                        >
-                            🩺 Doctor
-                        </button>
-                        <button
-                          type="button"
-                           className={
-                          role === "receptionist"
-                          ? "role-btn active"
-                          : "role-btn"
-                        }
-                    onClick={() => setRole("receptionist")}
-                    >
-                   🧑‍💼 Receptionist
-                 </button>
-
-                    </div>
                 </div>
 
-                <form onSubmit={handleRegister}>
 
-                    <input
-                        type="text"
-                        placeholder="Full Name"
-                        value={name}
-                        onChange={(e) =>
-                            setName(e.target.value)
-                        }
-                        required
-                    />
+                <div className="auth-brand-content">
 
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) =>
-                            setEmail(e.target.value)
-                        }
-                        required
-                    />
+                    <h2>
+                        Better Care,
+                        <br />
+                        <strong>
+                            Smarter Management
+                        </strong>
+                    </h2>
 
-                    <input
-                        type="tel"
-                        placeholder="Phone"
-                        value={phone}
-                        onChange={(e) =>
-                            setPhone(e.target.value)
-                        }
-                        required
-                    />
+                    <p>
+                        Join MediFlow and manage your healthcare
+                        appointments and services easily.
+                    </p>
 
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) =>
-                            setPassword(e.target.value)
-                        }
-                        required
-                    />
 
-<button
-    type="submit"
-    disabled={loading}
->
-    {loading
-        ? "Creating Account..."
-        : `Register as ${
-            role === "doctor"
-                ? "Doctor"
-                : role === "receptionist"
-                ? "Receptionist"
-                : "Patient"
-        }`
-    }
-</button>
+                    <div className="auth-benefits">
 
-                </form>
+                        <div>
+                            <span>📅</span>
+                            <p>
+                                <strong>Easy</strong>
+                                <br />
+                                Appointments
+                            </p>
+                        </div>
 
-                <p className="register-link">
-                    Already have an account?{" "}
+                        <div>
+                            <span>🩺</span>
+                            <p>
+                                <strong>Trusted</strong>
+                                <br />
+                                Doctors
+                            </p>
+                        </div>
+
+                        <div>
+                            <span>🏥</span>
+                            <p>
+                                <strong>Smart</strong>
+                                <br />
+                                Hospital
+                            </p>
+                        </div>
+
+                        <div>
+                            <span>♥</span>
+                            <p>
+                                <strong>Better</strong>
+                                <br />
+                                Health
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            {/* RIGHT REGISTER */}
+            <div className="auth-form-area">
+
+                <div className="auth-top-link">
+
+                    Already have an account?
 
                     <button
                         type="button"
@@ -200,9 +167,206 @@ function Register() {
                     >
                         Login
                     </button>
-                </p>
+
+                </div>
+
+
+                <div className="login-card">
+
+                    <div className="auth-card-logo">
+                        ✚
+                    </div>
+
+
+                    <h2>
+                        Create Account
+                    </h2>
+
+                    <p className="auth-subtitle">
+                        Register to manage your healthcare
+                        appointments
+                    </p>
+
+
+                    {error && (
+                        <div className="error-message">
+                            {error}
+                        </div>
+                    )}
+
+
+                    {success && (
+                        <div className="success-message">
+                            {success}
+                        </div>
+                    )}
+
+
+                    {/* ROLE */}
+                    <div className="role-section">
+
+                        <label>
+                            Register as
+                        </label>
+
+                        <div className="role-buttons">
+
+                            <button
+                                type="button"
+                                className={
+                                    role === "patient"
+                                        ? "role-btn active"
+                                        : "role-btn"
+                                }
+                                onClick={() =>
+                                    setRole("patient")
+                                }
+                            >
+                                <span>👤</span>
+                                Patient
+                            </button>
+
+
+                            <button
+                                type="button"
+                                className={
+                                    role === "doctor"
+                                        ? "role-btn active"
+                                        : "role-btn"
+                                }
+                                onClick={() =>
+                                    setRole("doctor")
+                                }
+                            >
+                                <span>🩺</span>
+                                Doctor
+                            </button>
+
+
+                            <button
+                                type="button"
+                                className={
+                                    role === "receptionist"
+                                        ? "role-btn active"
+                                        : "role-btn"
+                                }
+                                onClick={() =>
+                                    setRole("receptionist")
+                                }
+                            >
+                                <span>👨‍💼</span>
+                                Receptionist
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <form onSubmit={handleRegister}>
+
+                        {/* NAME */}
+                        <div className="auth-input-group">
+
+                            <span>👤</span>
+
+                            <input
+                                type="text"
+                                placeholder="Full Name"
+                                value={name}
+                                onChange={(e) =>
+                                    setName(e.target.value)
+                                }
+                                required
+                            />
+
+                        </div>
+
+
+                        {/* EMAIL */}
+                        <div className="auth-input-group">
+
+                            <span>✉️</span>
+
+                            <input
+                                type="email"
+                                placeholder="Email address"
+                                value={email}
+                                onChange={(e) =>
+                                    setEmail(e.target.value)
+                                }
+                                required
+                            />
+
+                        </div>
+
+
+                        {/* PHONE */}
+                        <div className="auth-input-group">
+
+                            <span>📱</span>
+
+                            <input
+                                type="tel"
+                                placeholder="Phone number"
+                                value={phone}
+                                onChange={(e) =>
+                                    setPhone(e.target.value)
+                                }
+                                required
+                            />
+
+                        </div>
+
+
+                        {/* PASSWORD */}
+                        <div className="auth-input-group">
+
+                            <span>🔒</span>
+
+                            <input
+                                type="password"
+                                placeholder="Password"
+                                value={password}
+                                onChange={(e) =>
+                                    setPassword(e.target.value)
+                                }
+                                required
+                            />
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            disabled={loading}
+                        >
+                            {loading
+                                ? "Creating Account..."
+                                : `Register as ${roleName} →`
+                            }
+                        </button>
+
+                    </form>
+
+
+                    <p className="register-link">
+
+                        Already have an account?{" "}
+
+                        <button
+                            type="button"
+                            onClick={() => navigate("/")}
+                        >
+                            Login
+                        </button>
+
+                    </p>
+
+                </div>
 
             </div>
+
         </div>
     );
 }

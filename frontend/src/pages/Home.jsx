@@ -5,18 +5,174 @@ import Chatbot from "../components/Chatbot";
 function Home() {
     const navigate = useNavigate();
 
+    const scrollToSection = (id) => {
+        document
+            .getElementById(id)
+            ?.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+    };
+
+const services = [
+    {
+        number: "01",
+        icon: "👨‍⚕️",
+        title: "Find Trusted Doctors",
+        description: "Find qualified doctors across medical specialties.",
+        action: "Find Doctors",
+        onClick: () => navigate("/doctors")
+    },
+    {
+        number: "02",
+        icon: "📅",
+        title: "Easy Appointments",
+        description: "Book appointments with your preferred doctor.",
+        action: "Book Appointment",
+        onClick: () => navigate("/book-appointment")
+    },
+    {
+        number: "03",
+        icon: "💬",
+        title: "Personal Doctor Chat",
+        description: "Connect privately with your assigned doctor.",
+        action: "View Appointments",
+        onClick: () => navigate("/appointments")
+    },
+    {
+        number: "04",
+        icon: "📹",
+        title: "Video Consultation",
+        description: "Consult your doctor through secure online video.",
+        action: "View Appointments",
+        onClick: () => navigate("/appointments")
+    },
+    {
+        number: "05",
+        icon: "📄",
+        title: "Medical Reports",
+        description: "Access and manage your healthcare reports.",
+        action: "Medical Reports",
+        onClick: () => navigate("/medical-reports")
+    },
+    {
+        number: "06",
+        icon: "👤",
+        title: "Health Profile",
+        description: "Keep your personal health information organized.",
+        action: "Manage Profile",
+        onClick: () => navigate("/patient-profile")
+    },
+    {
+        number: "07",
+        icon: "🛏️",
+        title: "Bed & Room Management",
+        description: "Manage hospital beds, rooms and admissions.",
+        action: "Hospital Management",
+        onClick: () => navigate("/login")
+    },
+    {
+        number: "08",
+        icon: "🏥",
+        title: "Healthcare Management",
+        description: "Manage essential healthcare services in one place.",
+        action: "Explore MediFlow",
+        onClick: () => scrollToSection("why-mediflow")
+    }
+];
+
+    const specialties = [
+        "Cardiology",
+        "Neurology",
+        "Orthopedics",
+        "Pediatrics",
+        "Dermatology",
+        "General Medicine"
+    ];
+
+    const whyFeatures = [
+        {
+            icon: "🔒",
+            title: "Secure & Private",
+            description:
+                "Your personal and healthcare information is handled with security and privacy in mind."
+        },
+        {
+            icon: "⚡",
+            title: "Easy Booking",
+            description:
+                "Find doctors and schedule appointments without unnecessary waiting or complexity."
+        },
+        {
+            icon: "🩺",
+            title: "Trusted Doctors",
+            description:
+                "Discover qualified healthcare professionals across different medical specialties."
+        },
+        {
+            icon: "📋",
+            title: "Health Management",
+            description:
+                "Keep your healthcare information organized and easily accessible."
+        }
+    ];
+
+    const testimonials = [
+        {
+            initials: "PS",
+            name: "Priya Sharma",
+            text:
+                "MediFlow made booking my appointment extremely simple. I found a doctor quickly and didn't have to wait."
+        },
+        {
+            initials: "RV",
+            name: "Rahul Verma",
+            text:
+                "The platform is clean and easy to use. I can manage my appointments and profile from one place."
+        },
+        {
+            initials: "AM",
+            name: "Anjali Mehta",
+            text:
+                "Finding a specialist and booking an appointment was much easier than I expected."
+        }
+    ];
+
     return (
         <div className="home-page">
 
-            {/* ================= NAVBAR ================= */}
+            {/* ================= UTILITY BAR ================= */}
 
-            <nav className="home-navbar">
+            <div className="home-utility-bar">
+
+                <div className="home-utility-left">
+                    <span>🇮🇳</span>
+                    <span>MediFlow Healthcare Platform</span>
+                </div>
+
+                <div className="home-utility-right">
+                    <span>Emergency Help</span>
+                    <span>Accessibility</span>
+                    <span>A+</span>
+                    <span>A</span>
+                    <span>A−</span>
+                    <span>English ▾</span>
+                </div>
+
+            </div>
+
+
+            {/* ================= BRAND HEADER ================= */}
+
+            <header className="home-main-header">
 
                 <div
                     className="home-logo"
                     onClick={() => navigate("/")}
                 >
-                    <div className="home-logo-icon">✚</div>
+                    <div className="home-logo-icon">
+                        +
+                    </div>
 
                     <div>
                         <h2>MediFlow</h2>
@@ -24,67 +180,18 @@ function Home() {
                     </div>
                 </div>
 
-                <div className="home-nav-links">
 
-                    <button
-                        className="active"
-                        onClick={() => navigate("/")}
-                    >
-                        Home
-                    </button>
-
-                    <button
-                        onClick={() => navigate("/doctors")}
-                    >
-                        Find Doctors
-                    </button>
-
-                    <button
-                        onClick={() =>
-                            document
-                                .getElementById("services")
-                                ?.scrollIntoView({
-                                    behavior: "smooth",
-                                })
-                        }
-                    >
-                        Services
-                    </button>
-
-                    <button
-                        onClick={() =>
-                            document
-                                .getElementById("why-mediflow")
-                                ?.scrollIntoView({
-                                    behavior: "smooth",
-                                })
-                        }
-                    >
-                        About Us
-                    </button>
-
-                    <button
-                        onClick={() =>
-                            document
-                                .getElementById("footer")
-                                ?.scrollIntoView({
-                                    behavior: "smooth",
-                                })
-                        }
-                    >
-                        Help
-                    </button>
-
-                </div>
-
-                <div className="home-nav-actions">
+                <div className="home-header-actions">
 
                     <div className="home-search">
+
                         <span>⌕</span>
+
                         <input
                             type="text"
-                            placeholder="Search..."
+                            placeholder="Search doctors, services..."
                         />
+
                     </div>
 
                     <button
@@ -105,176 +212,209 @@ function Home() {
 
                 </div>
 
+            </header>
+
+
+            {/* ================= NAVIGATION ================= */}
+
+            <nav className="home-navbar">
+
+                <div className="home-nav-links">
+
+                    <button
+                        className="active"
+                        onClick={() => navigate("/")}
+                    >
+                        🏠 Home
+                    </button>
+
+                    <button
+                        onClick={() => navigate("/doctors")}
+                    >
+                        Find Doctors
+                    </button>
+
+                    <button
+                        onClick={() =>
+                            scrollToSection("services")
+                        }
+                    >
+                        Services
+                    </button>
+
+                    <button
+                        onClick={() =>
+                            scrollToSection("why-mediflow")
+                        }
+                    >
+                        About Us
+                    </button>
+
+                    <button
+                        onClick={() =>
+                            scrollToSection("footer")
+                        }
+                    >
+                        Help
+                    </button>
+
+                </div>
+
             </nav>
 
 
-            {/* ================= HERO ================= */}
+{/* ================= HERO ================= */}
 
-            <section className="home-hero">
+<section className="home-hero">
 
-                <div className="hero-circle hero-circle-one"></div>
-                <div className="hero-circle hero-circle-two"></div>
+    <div className="home-hero-container">
 
-                <div className="home-hero-container">
+        <div className="home-hero-content">
 
-                    {/* LEFT */}
+            <div className="home-badge">
+                <span className="home-badge-dot"></span>
+                SMART HEALTHCARE PLATFORM
+            </div>
 
-                    <div className="home-hero-content">
+            <p className="hero-welcome">
+                WELCOME TO MEDIFLOW
+            </p>
 
-                        <div className="home-badge">
-                            <span className="home-badge-dot"></span>
-                            SMART HEALTHCARE PLATFORM
-                        </div>
+            <h1>
+                Healthcare that
+                <span>puts you first.</span>
+            </h1>
 
-                        <h1>
-                            Healthcare that
-                            <span>puts you first.</span>
-                        </h1>
+            <p className="home-hero-description">
+                Connect with trusted doctors, book appointments,
+                communicate privately and access digital healthcare
+                services — all from one simple platform.
+            </p>
 
-                        <p className="home-hero-description">
-                            Connect with trusted doctors, book appointments,
-                            manage your health information and get the care
-                            you need — all from one simple platform.
-                        </p>
+            <div className="home-hero-buttons">
 
-                        <div className="home-hero-buttons">
+                <button
+                    className="home-primary-btn"
+                    onClick={() => navigate("/doctors")}
+                >
+                    Find a Doctor
+                    <span>→</span>
+                </button>
 
-                            <button
-                                className="home-primary-btn"
-                                onClick={() =>
-                                    navigate("/doctors")
-                                }
-                            >
-                                Find a Doctor
-                                <span>→</span>
-                            </button>
+                <button
+                    className="home-secondary-btn"
+                    onClick={() => navigate("/book-appointment")}
+                >
+                    Book Appointment
+                </button>
 
-                            <button
-                                className="home-secondary-btn"
-                                onClick={() =>
-                                    navigate("/book-appointment")
-                                }
-                            >
-                                Book Appointment
-                            </button>
+            </div>
 
-                        </div>
+            <div className="home-trust">
 
+                <div className="home-trust-badges">
+                    <span>500+</span>
+                    <span>10K+</span>
+                    <span>50+</span>
+                </div>
 
-                        {/* TRUST */}
-
-                        <div className="home-trust">
-
-                            <div className="home-patient-avatars">
-                                <span>👩🏻</span>
-                                <span>👨🏻</span>
-                                <span>👩🏼</span>
-                                <span>👨🏼</span>
-                            </div>
-
-                            <div>
-                                <div className="home-stars">
-                                    ★ ★ ★ ★ ★
-                                </div>
-
-                                <small>
-                                    Trusted by thousands of patients
-                                </small>
-                            </div>
-
-                        </div>
-
+                <div>
+                    <div className="home-stars">
+                        ★ ★ ★ ★ ★
                     </div>
 
+                    <small>
+                        Trusted healthcare platform
+                    </small>
+                </div>
 
-                    {/* RIGHT */}
+            </div>
 
-                    <div className="home-hero-visual">
+        </div>
 
-                        <div className="home-doctor-card">
+    </div>
 
-                            <div className="home-doctor-card-top">
+</section>
+            {/* ================= QUICK ACCESS ================= */}
 
-                                <span>
-                                    <i></i>
-                                    Available today
-                                </span>
+            <section className="home-quick-access">
 
-                                <span className="home-heart">
-                                    ♡
-                                </span>
+                <div className="quick-access-title">
+                    <span>✦</span>
+                    <strong>QUICK ACCESS</strong>
+                </div>
 
-                            </div>
+                <div className="quick-access-items">
 
-                            <div className="home-doctor-image">
-                                👩‍⚕️
-                            </div>
+                    <button
+                        onClick={() => navigate("/doctors")}
+                    >
+                        👨‍⚕️
+                        <span>Find Doctor</span>
+                    </button>
 
-                            <div className="home-doctor-info">
+                    <button
+                        onClick={() =>
+                            navigate("/book-appointment")
+                        }
+                    >
+                        📅
+                        <span>Book Appointment</span>
+                    </button>
 
-                                <div>
-                                    <h3>
-                                        Expert Healthcare
-                                    </h3>
+                    <button
+                        onClick={() =>
+                            navigate("/appointments")
+                        }
+                    >
+                        📋
+                        <span>My Appointments</span>
+                    </button>
 
-                                    <p>
-                                        Qualified professionals
-                                    </p>
-                                </div>
+                    <button
+                        onClick={() =>
+                            navigate("/medical-reports")
+                        }
+                    >
+                        📄
+                        <span>Medical Reports</span>
+                    </button>
 
-                                <span className="home-rating">
-                                    ★ 4.9
-                                </span>
-
-                            </div>
-
-                        </div>
-
-
-                        {/* FLOATING CARD */}
-
-                        <div className="home-floating-card home-doctors-float">
-
-                            <div className="floating-icon">
-                                ✓
-                            </div>
-
-                            <div>
-                                <strong>
-                                    500+
-                                </strong>
-
-                                <small>
-                                    Verified Doctors
-                                </small>
-                            </div>
-
-                        </div>
-
-
-                        {/* SECURITY CARD */}
-
-                        <div className="home-floating-card home-security-float">
-
-                            <div className="floating-icon security">
-                                ♡
-                            </div>
-
-                            <div>
-                                <strong>
-                                    100%
-                                </strong>
-
-                                <small>
-                                    Secure & Private
-                                </small>
-                            </div>
-
-                        </div>
-
-                    </div>
+                    <button
+                        onClick={() =>
+                            navigate("/patient-profile")
+                        }
+                    >
+                        👤
+                        <span>Health Profile</span>
+                    </button>
 
                 </div>
+
+            </section>
+
+
+            {/* ================= UPDATE BAR ================= */}
+
+            <section className="home-update-bar">
+
+                <div className="home-update-label">
+                    <span>●</span>
+                    MEDIFLOW UPDATE
+                </div>
+
+                <div className="home-update-content">
+                    Personal Doctor Chat • Video Consultation •
+                    Medical Reports
+                </div>
+
+                <button
+                    onClick={() =>
+                        navigate("/appointments")
+                    }
+                >
+                    Explore →
+                </button>
 
             </section>
 
@@ -308,138 +448,136 @@ function Home() {
                 </div>
 
             </section>
+{/* ================= SERVICES ================= */}
 
+<section className="home-services" id="services">
+    <div className="home-section-heading">
+        <h2>
+            Everything you need for{" "}
+            <strong>better healthcare.</strong>
+        </h2>
 
-            {/* ================= SERVICES ================= */}
+    </div>
+    <div className="service-flow">
 
-            <section
-                className="home-services"
-                id="services"
+        {services.map((service, index) => (
+            <div
+                className={`service-flow-item ${
+                    index % 2 === 0 ? "service-up" : "service-down"
+                }`}
+                key={service.number}
             >
 
-                <div className="home-section-heading">
+                <div className="service-visual">
+                    <div className="service-icon">
+                        {service.icon}
+                    </div>
+                </div>
 
-                    <span>
-                        WHAT WE OFFER
-                    </span>
+                <div className="service-number">
+                    {service.number}
+                </div>
+
+                <h3>{service.title}</h3>
+
+                <p>{service.description}</p>
+
+                <button onClick={service.onClick}>
+                    {service.action}
+                    <span>→</span>
+                </button>
+
+            </div>
+        ))}
+
+    </div>
+
+    <div className="services-bottom-cta">
+        <div className="services-cta-icon">♥</div>
+
+        <div>
+<h3>Ready for better healthcare?</h3>
+<p>
+    Everything you need, all in one place.
+</p>
+        </div>
+
+        <button onClick={() => navigate("/register")}>
+            Get Started Today →
+        </button>
+    </div>
+
+</section>
+
+{/* ================= CONNECTED HEALTHCARE GALLERY ================= */}
+
+            <section className="home-gallery-section">
+
+                <div className="home-gallery-heading">
+                    <span>CONNECTED HEALTHCARE</span>
 
                     <h2>
-                        Everything you need for{" "}
-                        <strong>better healthcare.</strong>
+                        Healthcare designed for <strong>real life.</strong>
                     </h2>
 
                     <p>
-                        MediFlow brings essential healthcare services
-                        together in one secure and easy-to-use platform.
+                        Connect, consult and manage healthcare in one place.
                     </p>
-
                 </div>
 
+                <div className="home-gallery">
 
-                <div className="home-service-grid">
-
-                    {/* CARD 1 */}
-
-                    <div className="home-service-card">
-
-                        <div className="home-service-icon blue">
-                            ✦
+                    {/* 01 - Wide top image */}
+                    <div className="gallery-main">
+ <img
+    src="/image.png"
+    alt="Doctor consulting with patient"
+/>
+                        <div className="gallery-overlay">
+                            <small>01</small>
+                            <h3>Connected Healthcare</h3>
+                            <p>Patients, doctors and healthcare services together.</p>
+                            <button onClick={() => navigate("/doctors")}>
+                                Explore Healthcare →
+                            </button>
                         </div>
-
-                        <span className="service-number">
-                            01
-                        </span>
-
-                        <h3>
-                            Find Trusted Doctors
-                        </h3>
-
-                        <p>
-                            Browse qualified doctors by specialization
-                            and choose the right healthcare professional
-                            for your needs.
-                        </p>
-
-                        <button
-                            onClick={() =>
-                                navigate("/doctors")
-                            }
-                        >
-                            Find Doctors →
-                        </button>
-
                     </div>
 
-
-                    {/* CARD 2 */}
-
-                    <div className="home-service-card">
-
-                        <div className="home-service-icon">
-                            ▦
+                    {/* 02 - Bottom left */}
+                    <div className="gallery-small gallery-video">
+<img
+    src="/video.png"
+    alt="Video consultation with doctor"
+/>
+                        <div className="gallery-overlay">
+                            <small>02</small>
+                            <h3>Video Consultation</h3>
+                            <p>Connect with your doctor online.</p>
+                            <button onClick={() => navigate("/appointments")}>
+                                View Appointments →
+                            </button>
                         </div>
-
-                        <span className="service-number">
-                            02
-                        </span>
-
-                        <h3>
-                            Easy Appointments
-                        </h3>
-
-                        <p>
-                            Schedule appointments with your preferred
-                            doctor and select convenient available
-                            dates and time slots.
-                        </p>
-
-                        <button
-                            onClick={() =>
-                                navigate("/book-appointment")
-                            }
-                        >
-                            Book Appointment →
-                        </button>
-
                     </div>
 
+                    {/* 03 - Bottom right */}
+                    <div className="gallery-small gallery-hospital">
+<img
+    src="/bed.png"
+    alt="Modern hospital room"
+/>
 
-                    {/* CARD 3 */}
-
-                    <div className="home-service-card">
-
-                        <div className="home-service-icon green">
-                            ♡
+                        <div className="gallery-overlay">
+                            <small>03</small>
+                            <h3>Smart Hospital</h3>
+                            <p>Manage beds, rooms and admissions.</p>
+                            <button onClick={() => navigate("/login")}>
+                                Hospital Management →
+                            </button>
                         </div>
-
-                        <span className="service-number">
-                            03
-                        </span>
-
-                        <h3>
-                            Secure Health Profile
-                        </h3>
-
-                        <p>
-                            Keep your personal and medical information
-                            organized securely and access it whenever
-                            you need it.
-                        </p>
-
-                        <button
-                            onClick={() =>
-                                navigate("/patient-profile")
-                            }
-                        >
-                            Manage Profile →
-                        </button>
-
                     </div>
 
                 </div>
-
             </section>
-
 
             {/* ================= WHY MEDIFLOW ================= */}
 
@@ -455,7 +593,8 @@ function Home() {
                     </span>
 
                     <h2>
-                        Healthcare made <strong>simple.</strong>
+                        Healthcare made{" "}
+                        <strong>simple.</strong>
                     </h2>
 
                     <p>
@@ -467,61 +606,39 @@ function Home() {
 
 
                 <div className="home-why-grid">
+{whyFeatures.map((feature) => (
+    <div
+        className="home-why-card"
+        key={feature.title}
+        onMouseMove={(e) => {
+            const rect = e.currentTarget.getBoundingClientRect();
 
-                    <div className="home-why-card">
-                        <div>🔒</div>
+            e.currentTarget.style.setProperty(
+                "--mouse-x",
+                `${e.clientX - rect.left}px`
+            );
 
-                        <h3>
-                            Secure & Private
-                        </h3>
+            e.currentTarget.style.setProperty(
+                "--mouse-y",
+                `${e.clientY - rect.top}px`
+            );
+        }}
+    >
 
-                        <p>
-                            Your personal and healthcare information
-                            is handled with security and privacy in mind.
-                        </p>
-                    </div>
+                            <div className="why-icon">
+                                {feature.icon}
+                            </div>
 
+                            <h3>
+                                {feature.title}
+                            </h3>
 
-                    <div className="home-why-card">
-                        <div>⚡</div>
+                            <p>
+                                {feature.description}
+                            </p>
 
-                        <h3>
-                            Easy Booking
-                        </h3>
-
-                        <p>
-                            Find doctors and schedule appointments
-                            without unnecessary waiting or complexity.
-                        </p>
-                    </div>
-
-
-                    <div className="home-why-card">
-                        <div>🩺</div>
-
-                        <h3>
-                            Trusted Doctors
-                        </h3>
-
-                        <p>
-                            Discover qualified healthcare professionals
-                            across different medical specialties.
-                        </p>
-                    </div>
-
-
-                    <div className="home-why-card">
-                        <div>📋</div>
-
-                        <h3>
-                            Health Management
-                        </h3>
-
-                        <p>
-                            Keep your healthcare information organized
-                            and easily accessible.
-                        </p>
-                    </div>
+                        </div>
+                    ))}
 
                 </div>
 
@@ -543,7 +660,7 @@ function Home() {
                     </h2>
 
                     <p>
-                        Simple healthcare experiences from the people
+                        Simple healthcare experiences from people
                         who use MediFlow.
                     </p>
 
@@ -552,109 +669,47 @@ function Home() {
 
                 <div className="home-testimonial-grid">
 
-                    <div className="home-testimonial-card">
+                    {testimonials.map((testimonial) => (
+                        <div
+                            className="home-testimonial-card"
+                            key={testimonial.name}
+                        >
 
-                        <div className="testimonial-stars">
-                            ★★★★★
-                        </div>
-
-                        <p>
-                            "MediFlow made booking my appointment
-                            extremely simple. I found a doctor quickly
-                            and didn't have to wait."
-                        </p>
-
-                        <div className="testimonial-user">
-
-                            <div className="testimonial-avatar">
-                                PS
+                            <div className="testimonial-stars">
+                                ★★★★★
                             </div>
 
-                            <div>
-                                <strong>
-                                    Priya Sharma
-                                </strong>
+                            <p>
+                                "{testimonial.text}"
+                            </p>
 
-                                <span>
-                                    Verified Patient
-                                </span>
-                            </div>
+                            <div className="testimonial-user">
 
-                        </div>
+                                <div className="testimonial-avatar">
+                                    {testimonial.initials}
+                                </div>
 
-                    </div>
+                                <div>
+                                    <strong>
+                                        {testimonial.name}
+                                    </strong>
 
+                                    <span>
+                                        Verified Patient
+                                    </span>
+                                </div>
 
-                    <div className="home-testimonial-card">
-
-                        <div className="testimonial-stars">
-                            ★★★★★
-                        </div>
-
-                        <p>
-                            "The platform is clean and easy to use.
-                            I can manage my appointments and profile
-                            from one place."
-                        </p>
-
-                        <div className="testimonial-user">
-
-                            <div className="testimonial-avatar">
-                                RV
-                            </div>
-
-                            <div>
-                                <strong>
-                                    Rahul Verma
-                                </strong>
-
-                                <span>
-                                    Verified Patient
-                                </span>
                             </div>
 
                         </div>
-
-                    </div>
-
-
-                    <div className="home-testimonial-card">
-
-                        <div className="testimonial-stars">
-                            ★★★★★
-                        </div>
-
-                        <p>
-                            "Finding a specialist and booking an
-                            appointment was much easier than I expected."
-                        </p>
-
-                        <div className="testimonial-user">
-
-                            <div className="testimonial-avatar">
-                                AM
-                            </div>
-
-                            <div>
-                                <strong>
-                                    Anjali Mehta
-                                </strong>
-
-                                <span>
-                                    Verified Patient
-                                </span>
-                            </div>
-
-                        </div>
-
-                    </div>
+                    ))}
 
                 </div>
 
             </section>
 
 
-            {/* ================= CTA ================= */}
+            {/* ================= FINAL CTA ================= */}
 
             <section className="home-cta">
 
@@ -667,15 +722,18 @@ function Home() {
                         </span>
 
                         <h2>
-                            Ready to take control of your healthcare?
+                            Your healthcare,
+                            connected in one place.
                         </h2>
 
                         <p>
-                            Find the right doctor and book your
-                            appointment today.
+                            Find the right doctor, book your
+                            appointment and stay connected with
+                            your healthcare team.
                         </p>
 
                     </div>
+
 
                     <div className="home-cta-buttons">
 
@@ -702,100 +760,276 @@ function Home() {
 
             </section>
 
-{/* ================= FOOTER ================= */}
-<footer className="home-footer">
 
-    <div className="footer-container">
+            {/* ================= FOOTER ================= */}
 
-        {/* Brand */}
-        <div className="footer-brand">
+            <footer
+                className="home-footer"
+                id="footer"
+            >
 
-            <div className="footer-logo">
-                <span className="footer-logo-icon">+</span>
-                <span>MediFlow</span>
-            </div>
+                <div className="footer-container">
 
-            <p>
-                Modern healthcare made simple.
-                Accessible, secure and convenient
-                for everyone.
-            </p>
+                    <div className="footer-brand">
 
-            <div className="footer-socials">
-                <a href="#" aria-label="Facebook">f</a>
-                <a href="#" aria-label="Twitter">𝕏</a>
-                <a href="#" aria-label="Instagram">◎</a>
-                <a href="#" aria-label="LinkedIn">in</a>
-            </div>
+                        <div className="footer-logo">
 
-        </div>
+                            <span className="footer-logo-icon">
+                                +
+                            </span>
 
+                            <span>
+                                MediFlow
+                            </span>
 
-        {/* Quick Links */}
-        <div className="footer-column">
+                        </div>
 
-            <h3>Quick Links</h3>
+                        <p>
+                            Modern healthcare made simple.
+                            Accessible, secure and convenient
+                            for everyone.
+                        </p>
 
-            <span className="footer-line"></span>
+                        <div className="footer-socials">
 
-            <a href="/">⌂ <span>Home</span></a>
-            <a href="/doctors">♙ <span>Find Doctors</span></a>
-            <a href="/appointments">▣ <span>Appointments</span></a>
-            <a href="/login">⇥ <span>Login</span></a>
+                            <a
+                                href="#"
+                                aria-label="Facebook"
+                            >
+                                f
+                            </a>
 
-        </div>
+                            <a
+                                href="#"
+                                aria-label="Twitter"
+                            >
+                                𝕏
+                            </a>
 
+                            <a
+                                href="#"
+                                aria-label="Instagram"
+                            >
+                                ◎
+                            </a>
 
-        {/* Services */}
-        <div className="footer-column">
+                            <a
+                                href="#"
+                                aria-label="LinkedIn"
+                            >
+                                in
+                            </a>
 
-            <h3>Services</h3>
+                        </div>
 
-            <span className="footer-line"></span>
-
-            <a href="/doctors">♙ <span>Find Doctors</span></a>
-            <a href="/appointments">▣ <span>Online Appointments</span></a>
-            <a href="/patient-profile">□ <span>Health Profiles</span></a>
-            <a href="/dashboard">▣ <span>Healthcare Management</span></a>
-
-        </div>
-
-
-        {/* Support */}
-        <div className="footer-column">
-
-            <h3>Support</h3>
-
-            <span className="footer-line"></span>
-
-            <a href="#">♧ <span>Help Center</span></a>
-            <a href="#">☎ <span>Contact Us</span></a>
-            <a href="#">♢ <span>Privacy Policy</span></a>
-            <a href="#">▱ <span>Terms of Service</span></a>
-
-        </div>
-
-    </div>
+                    </div>
 
 
-    {/* Bottom Footer */}
-    <div className="footer-bottom">
+                    <div className="footer-column">
 
-        <div className="footer-bottom-left">
-            <span className="footer-bottom-icon">♢</span>
-            <span>© 2026 MediFlow. All rights reserved.</span>
-        </div>
+                        <h3>
+                            Quick Links
+                        </h3>
 
-        <div className="footer-bottom-right">
-            <span className="footer-bottom-icon">♡</span>
-            <span>Your Health, Our Priority</span>
-        </div>
+                        <span className="footer-line"></span>
 
-    </div>
+                        <a
+                            href="/"
+                            onClick={(event) => {
+                                event.preventDefault();
+                                navigate("/");
+                            }}
+                        >
+                            Home
+                        </a>
 
-</footer>
+                        <a
+                            href="/doctors"
+                            onClick={(event) => {
+                                event.preventDefault();
+                                navigate("/doctors");
+                            }}
+                        >
+                            Find Doctors
+                        </a>
 
-<Chatbot/>
+                        <a
+                            href="/appointments"
+                            onClick={(event) => {
+                                event.preventDefault();
+                                navigate("/appointments");
+                            }}
+                        >
+                            Appointments
+                        </a>
+
+                        <a
+                            href="/login"
+                            onClick={(event) => {
+                                event.preventDefault();
+                                navigate("/login");
+                            }}
+                        >
+                            Login
+                        </a>
+
+                    </div>
+
+
+                    <div className="footer-column">
+
+                        <h3>
+                            Services
+                        </h3>
+
+                        <span className="footer-line"></span>
+
+                        <a
+                            href="/doctors"
+                            onClick={(event) => {
+                                event.preventDefault();
+                                navigate("/doctors");
+                            }}
+                        >
+                            Find Doctors
+                        </a>
+
+                        <a
+                            href="/appointments"
+                            onClick={(event) => {
+                                event.preventDefault();
+                                navigate("/appointments");
+                            }}
+                        >
+                            Online Appointments
+                        </a>
+
+                        <a
+                            href="/patient-profile"
+                            onClick={(event) => {
+                                event.preventDefault();
+                                navigate("/patient-profile");
+                            }}
+                        >
+                            Health Profiles
+                        </a>
+
+                        <a
+                            href="/medical-reports"
+                            onClick={(event) => {
+                                event.preventDefault();
+                                navigate("/medical-reports");
+                            }}
+                        >
+                            Medical Reports
+                        </a>
+
+                    </div>
+
+
+                    <div className="footer-column">
+
+                        <h3>
+                            Hospital
+                        </h3>
+
+                        <span className="footer-line"></span>
+
+                        <a
+                            href="/login"
+                            onClick={(event) => {
+                                event.preventDefault();
+                                navigate("/login");
+                            }}
+                        >
+                            Bed Management
+                        </a>
+
+                        <a
+                            href="/login"
+                            onClick={(event) => {
+                                event.preventDefault();
+                                navigate("/login");
+                            }}
+                        >
+                            Room Management
+                        </a>
+
+                        <a
+                            href="/login"
+                            onClick={(event) => {
+                                event.preventDefault();
+                                navigate("/login");
+                            }}
+                        >
+                            Admissions
+                        </a>
+
+                        <a
+                            href="/login"
+                            onClick={(event) => {
+                                event.preventDefault();
+                                navigate("/login");
+                            }}
+                        >
+                            Billing
+                        </a>
+
+                    </div>
+
+
+                    <div className="footer-column">
+
+                        <h3>
+                            Support
+                        </h3>
+
+                        <span className="footer-line"></span>
+
+                        <a href="#">
+                            Help Center
+                        </a>
+
+                        <a href="#">
+                            Contact Us
+                        </a>
+
+                        <a href="#">
+                            Privacy Policy
+                        </a>
+
+                        <a href="#">
+                            Terms of Service
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div className="footer-bottom">
+
+                    <div className="footer-bottom-left">
+                        <span>
+                            © 2026 MediFlow. All rights reserved.
+                        </span>
+                    </div>
+
+                    <div className="footer-bottom-right">
+                        <span>
+                            Your Health, Our Priority
+                        </span>
+                    </div>
+
+                </div>
+
+            </footer>
+
+
+            {/* ================= CHATBOT ================= */}
+
+            <Chatbot />
+
         </div>
     );
 }
